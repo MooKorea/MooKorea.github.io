@@ -28,13 +28,22 @@ async function getMD() {
         file.type === "file" && path.extname(file.name).toLowerCase() === ".md"
     );
 
+
+    let fileNamesArr = []
+    for (let i = 0; i < result.length; i++) {
+      fileNamesArr.push(result[i].name.slice(0, -3) + ".html")
+    }
+
     await result.forEach(async (element) => {
       const getURLcontent = await axios({
         method: "get",
         url: element.download_url,
       })
-      parseMD(getURLcontent.data, element.name)
+      parseMD(getURLcontent.data, element.name, fileNamesArr)
     });
+
+    createNamesFolder(fileNamesArr);
+    
   } catch (error) {
     console.error(error.message)
   }
@@ -42,7 +51,7 @@ async function getMD() {
 
 getMD();
 
-async function parseMD(content, name) {
+async function parseMD(content, name, fileNamesArr) {
   try {
     const html = await octokit.request('POST /markdown', {
       text: content,
@@ -60,4 +69,12 @@ async function parseMD(content, name) {
   } catch (error) {
     console.error(`Error converting ${name} to HTML: ${error.message}`);
   }
+}
+
+function createNamesFolder(fileNamesArr) {
+  if (!fs.existsSync(htmlDir + "/names")) {
+    fs.mkdirSync(htmlDir + "/names")
+  }
+  fs.writeFileSync(`${htmlDir}/names/names.txt`, `${fileNamesArr}`)
+  console.log('created names.txt')
 }
