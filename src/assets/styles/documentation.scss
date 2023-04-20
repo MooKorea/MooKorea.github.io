@@ -1,5 +1,7 @@
 .documentation-container {
-    width: 1200px;
+    @media (min-width: 1200px) {
+        width: 1200px;
+    }
     margin-inline: auto;
     display: flex;
     .body {
@@ -34,7 +36,8 @@
         position: fixed;
         width: $documentation-sidebar-width;
         margin-top: 1em;
-        height: calc(100vh - 2em);
+        margin-left: 1em;
+        height: calc(100vh - $navbar-height - 2em);
         background-color: rgb(255, 255, 255);
         overflow: hidden;
         border-radius: 1em;
