@@ -31,7 +31,7 @@ async function getMD() {
 
     let fileNamesArr = []
     for (let i = 0; i < result.length; i++) {
-      fileNamesArr.push(result[i].name.slice(0, -3) + ".html")
+      fileNamesArr.push(result[i].name.slice(0, -3))
     }
 
     await result.forEach(async (element) => {
@@ -72,9 +72,6 @@ async function parseMD(content, name, fileNamesArr) {
 }
 
 function createNamesFolder(fileNamesArr) {
-  if (!fs.existsSync(htmlDir + "/names")) {
-    fs.mkdirSync(htmlDir + "/names")
-  }
-  fs.writeFileSync(`${htmlDir}/names/names.txt`, `${fileNamesArr}`)
+  fs.writeFileSync(`dist/names.txt`, `${fileNamesArr}`)
   console.log('created names.txt')
 }

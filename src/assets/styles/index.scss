@@ -1,7 +1,30 @@
-@import 'documentation.scss';
+@import 'abstracts/colors';
+@import 'abstracts/fonts';
+@import 'abstracts/variables';
+@import 'scrollbar';
+@import 'documentation';
+
+html {
+    overflow-y:scroll;
+}
 
 body {
     margin: 0;
+    background-color: $white-dark;
+    font-family: $textNormal;
+    color: $textCol-dark;
+    font-size: 1rem;
+    line-height: 1.6em;
+}
+
+a {
+    color: rgb(79, 79, 219);
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: $blue-dark;
+    font-family: $textHeavy;
 }
 
 * {
