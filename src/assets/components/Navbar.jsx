@@ -5,7 +5,7 @@ export default function Navbar() {
     <nav>
       <div className='container'>
         <ul>
-            <li>Home</li>
+            <li className='logo'><img src="/images/Genvisis_Logo_Full.png"/></li>
             <li>Download</li>
             <li>Features</li>
             <li>Tutorials</li>

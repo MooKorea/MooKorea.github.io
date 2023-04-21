@@ -30,8 +30,13 @@ nav {
         padding-inline: 1em;
         height: $navbar-height;
         &:hover {
-            background-color: rgb(208, 208, 208);
             cursor: pointer;
+        }
+    }
+
+    .logo {
+        img {
+            height: $navbar-height;
         }
     }
 }
