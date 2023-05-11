@@ -31,7 +31,6 @@ async function getMD() {
 
     let fileNamesArr = []
     for (let i = 0; i < result.length; i++) {
-      console.log(result[i]);
       fileNamesArr.push(result[i].name.slice(0, -3))
     }
 

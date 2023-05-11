@@ -1,14 +1,14 @@
 @font-face {
     font-family: 'AvenirLTStd-Black';
-    src: url("src/assets/styles/abstracts/AvenirLTStd-Black.otf");
+    src: url("/fonts/AvenirLTStd-Black.otf");
 }
 @font-face {
     font-family: 'AvenirLTStd-Book';
-    src: url("src/assets/styles/abstracts/AvenirLTStd-Book.otf");
+    src: url("/fonts/AvenirLTStd-Book.otf");
 }
 @font-face {
     font-family: 'AvenirLTStd-Roman';
-    src: url("src/assets/styles/abstracts/AvenirLTStd-Roman.otf");
+    src: url("/fonts/AvenirLTStd-Roman.otf");
 }
 
 $textNormal: 'AvenirLTStd-Roman', sans-serif;
