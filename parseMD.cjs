@@ -5,8 +5,8 @@ const axios = require("axios");
 require('dotenv').config()
 
 const accessToken = process.env.VITE_GITHUB_TOKEN;
-const owner = "MooKorea";
-const repo = "genvisis-docs-tests";
+const owner = "PankratzLab";
+const repo = "Genvisis-Docs";
 const branch = "main";
 const htmlDir = "dist/docs";
 
@@ -31,6 +31,7 @@ async function getMD() {
 
     let fileNamesArr = []
     for (let i = 0; i < result.length; i++) {
+      console.log(result[i]);
       fileNamesArr.push(result[i].name.slice(0, -3))
     }
 
@@ -39,7 +40,11 @@ async function getMD() {
         method: "get",
         url: element.download_url,
       })
-      parseMD(getURLcontent.data, element.name, fileNamesArr)
+      if (element.name === "toc.md") {
+        createTOC(getURLcontent.data);
+        return;
+      }
+      parseMD(getURLcontent.data, element.name)
     });
 
     createNamesFolder(fileNamesArr);
@@ -51,7 +56,7 @@ async function getMD() {
 
 getMD();
 
-async function parseMD(content, name, fileNamesArr) {
+async function parseMD(content, name) {
   try {
     const html = await octokit.request('POST /markdown', {
       text: content,
@@ -74,4 +79,25 @@ async function parseMD(content, name, fileNamesArr) {
 function createNamesFolder(fileNamesArr) {
   fs.writeFileSync(`dist/names.txt`, `${fileNamesArr}`)
   console.log('created names.txt')
+}
+
+function createTOC(data) {
+  const lines = data.trim().split('\n').filter(n => n);
+  const nestedLines = [];
+  let currentNested = null;
+
+  lines.forEach(line => {
+    if (line.startsWith('%')) {
+        if (!currentNested) {
+            currentNested = [];
+            nestedLines.push(currentNested);
+        }
+        currentNested.push(line);
+        return;
+    }
+    currentNested = null;
+    nestedLines.push(line);
+  })
+  fs.writeFileSync('dist/toc.txt', JSON.stringify(nestedLines))
+  console.log('created toc.txt')
 }

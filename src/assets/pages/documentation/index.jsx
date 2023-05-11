@@ -4,28 +4,39 @@ import Sidebar from "./Sidebar";
 export default function Documentation() {
   const [HTMLList, setHTMLList] = useState();
   useEffect(() => {
-    async function fetchData() {
-      const data = await fetch("names.txt");
+    (async function fetchData() {
+      const data = await fetch("toc.txt");
       const res = await data.text();
-      setHTMLList(res.split(",").filter((e) => e !== "README"));
-    }
-    fetchData();
+      const parsedRes = JSON.parse(res).slice(2);
+      const sidebarItems = [];
+      parsedRes.forEach((e) => {
+        if (!Array.isArray(e)) {
+          sidebarItems.push(e);
+          return;
+        }
+        e.forEach((r) => sidebarItems.push(r));
+      });
+      setHTMLList(parsedRes);
+    })();
   }, []);
 
-  const [page, setPage] = useState(0);
-  const handlePageChange = (index) => {
-    setPage(index);
+  const [page, setPage] = useState();
+  const handlePageChange = (data) => {
+    setPage(data.replaceAll("%", "").toLowerCase().replaceAll(" ", "-") + ".html");
   };
 
   const [HTML, setHTML] = useState();
   useEffect(() => {
-    async function fetchHTMLFile() {
+    (async function fetchHTMLFile() {
       if (HTMLList === undefined) return;
-      const data = await fetch(`docs/${HTMLList[page]}.html`);
+      const data = await fetch(`docs/${page}`);
+      if (data.status === 404) {
+        setHTML(`${page.slice(0, -5)}.md does not exist in the github repository`);
+        return;
+      }
       const res = await data.text();
       setHTML(res);
-    }
-    fetchHTMLFile();
+    })();
   }, [HTMLList, page]);
 
   return (
