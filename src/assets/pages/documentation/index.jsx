@@ -1,50 +1,65 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 
+export const PageChange = React.createContext();
+
 export default function Documentation() {
   const [HTMLList, setHTMLList] = useState();
+  const [mdData, setMdData] = useState();
   useEffect(() => {
     (async function fetchData() {
-      const data = await fetch("toc.txt");
-      const res = await data.text();
-      const parsedRes = JSON.parse(res).slice(2);
-      const sidebarItems = [];
-      parsedRes.forEach((e) => {
-        if (!Array.isArray(e)) {
-          sidebarItems.push(e);
-          return;
-        }
-        e.forEach((r) => sidebarItems.push(r));
-      });
-      setHTMLList(parsedRes);
+      const data = await fetch("docs/toc.json");
+      const res = await data.json();
+      setMdData(res);
+      for (let i of res) {
+        iterateObj(i);
+      }
+      setHTMLList(listItems);
     })();
   }, []);
 
-  const [page, setPage] = useState();
-  const handlePageChange = (data) => {
-    setPage(data.replaceAll("%", "").toLowerCase().replaceAll(" ", "-") + ".html");
+  const listItems = [];
+  let nest = 0;
+  const iterateObj = (res) => {
+    const value = Object.values(res)[0];
+    const key = Object.keys(res)[0];
+
+    if (Array.isArray(value)) {
+      listItems.push(listItemData(key, nest, nest === 0 ? "dropdown" : "grouper"));
+      nest++;
+      for (let i of value) {
+        iterateObj(i);
+      }
+      nest--;
+      return;
+    }
+
+    listItems.push(listItemData(key, nest, "page", value));
+    return;
   };
 
-  const [HTML, setHTML] = useState();
-  useEffect(() => {
-    (async function fetchHTMLFile() {
-      if (HTMLList === undefined) return;
-      const data = await fetch(`docs/${page}`);
-      if (data.status === 404) {
-        setHTML(`${page.slice(0, -5)}.md does not exist in the github repository`);
-        return;
-      }
-      const res = await data.text();
-      setHTML(res);
-    })();
-  }, [HTMLList, page]);
+  let groupId = 0;
+  const listItemData = (key, nest, type, path) => {
+    if (nest === 0) groupId++;
+    const item = {};
+    item.name = key;
+    item.nest = nest;
+    item.type = type;
+    item.path = path;
+    item.groupId = groupId;
+    return item;
+  };
+
+  const [page, setPage] = useState(1);
 
   return (
-    <main className="documentation">
-      <div className="documentation-container">
-        <Sidebar sidebarItems={HTMLList} handlePageChange={handlePageChange} />
-        <div className="body" dangerouslySetInnerHTML={{ __html: HTML }} />
-      </div>
-    </main>
+    <PageChange.Provider value={[page, setPage]}>
+      <main className="documentation">
+        <div className="documentation-container">
+          <Sidebar mdData={mdData} />
+          {/* <div className="body" dangerouslySetInnerHTML={{ __html: HTML }} /> */}
+        </div>
+      </main>
+    </PageChange.Provider>
   );
 }

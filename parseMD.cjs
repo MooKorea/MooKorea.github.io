@@ -5,8 +5,8 @@ const axios = require("axios");
 require('dotenv').config()
 
 const accessToken = process.env.VITE_GITHUB_TOKEN;
-const owner = "PankratzLab";
-const repo = "Genvisis-Docs";
+const owner = "MooKorea";
+const repo = "genvisis-docs-tests";
 const branch = "main";
 const htmlDir = "dist/docs";
 
@@ -98,5 +98,5 @@ function createTOC(data) {
     nestedLines.push(line);
   })
   fs.writeFileSync('dist/toc.txt', JSON.stringify(nestedLines))
-  console.log('created toc.txt')
+  console.log(nestedLines)
 }

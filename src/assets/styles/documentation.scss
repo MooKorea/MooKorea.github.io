@@ -29,6 +29,7 @@
     min-height: 100%;
     font-size: 0.9rem;
     $sidebar-margin: 20px;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.151));
 
     .sidebar-sticky {
         display: flex;
@@ -78,31 +79,21 @@
         
 
         .nested-group {
-            background-color: rgb(241, 241, 241);
-            overflow:hidden;
+            overflow: hidden;
+            padding-left:20px;
         }
-        .singleNest {
-            padding-left: 2em;
-        }
-        .doubleNest {
-            padding-left: 4.5em;
-            padding-block: 0.6em;
-            font-size: 0.7rem;
-        }
-        .collapsed {
-            height:0;
-        }
+
     }
 
     
     .item, .item-header {
         user-select: none;
         line-height: 1.5em;
-        padding-block: 0.7em;
-        padding-left: $sidebar-margin;
+        padding-block: 0.5em;
+        padding-inline: $sidebar-margin;
         transition: 0.1s;
         display: flex;
-        gap: 1em;
+        gap: 0.6em;
         transition: 0.1s;
         position: relative;
         div {
@@ -120,10 +111,6 @@
             opacity: 0.5;
             transition: 0.2s;
         }
-    }
-
-    .item:hover {
-        background-color: rgb(230, 230, 230);
     }
 
     .item-active {

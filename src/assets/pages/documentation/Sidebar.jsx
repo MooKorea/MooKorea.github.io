@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import SidebarHeaderItem from "./SidebarHeaderItem";
+import React from "react";
 import SidebarItem from "./SidebarItem";
+import SidebarCollapseContainer from "./SidebarCollapseContainer";
 
-export default function Sidebar({ sidebarItems, handlePageChange }) {
-  const [activeItem, setActiveItem] = useState();
-  const handleSidebarItems = (text, index) => {
-    if (Array.isArray(text)) {
+export default function Sidebar({ mdData }) {
+  const handleSidebarItems = (data, index) => {
+    const value = Object.values(data)[0];
+    const key = Object.keys(data)[0];
+    if (Array.isArray(value)) {
       return (
-        <div className="nested-group collapsed" data-collapsible={index - 1} key={index}>
-          <SidebarItem
-            data={text}
-            handlePageChange={handlePageChange}
-            activeItem={activeItem}
-            setActiveItem={setActiveItem}
-          />
-        </div>
+        <SidebarCollapseContainer
+          handleSidebarItems={handleSidebarItems}
+          key={key}
+          value={value}
+          data={data}
+          index={index}
+        />
       );
     }
-    return <SidebarHeaderItem key={index} text={text} index={index} />;
+    return <SidebarItem key={index} data={data} index={index} />;
   };
 
   return (
@@ -25,7 +25,7 @@ export default function Sidebar({ sidebarItems, handlePageChange }) {
       <div className="sidebar-sticky">
         <h2 className="header">Genvisis Step-By-Step Instructions</h2>
         <div className="sidebar-items">
-          {sidebarItems?.map((e, index) => {
+          {mdData?.map((e, index) => {
             return handleSidebarItems(e, index);
           })}
         </div>
