@@ -5,14 +5,13 @@ import "./assets/styles/index.scss";
 import { Route, Routes } from "react-router-dom";
 
 export default function App() {
-  const [docsPage, setDocsPage] = useState({});
   return (
     <>
       <Navbar />
       <Routes>
         <Route
           path={"/documentation/:documentationId"}
-          element={<Documentation page={docsPage} setPage={setDocsPage} />}
+          element={<Documentation />}
         />
       </Routes>
     </>

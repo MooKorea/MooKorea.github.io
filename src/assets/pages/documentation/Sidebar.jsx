@@ -8,16 +8,19 @@ export default function Sidebar({ mdData }) {
   const handleSidebarItems = (data, index) => {
 
     //create nested container if value is array
-    if (Array.isArray(Object.values(data)[0])) {
+    const keys = Object.keys(data)[0]
+    const values = Object.values(data)[0]
+    if (Array.isArray(values)) {
       return (
         <SidebarCollapseContainer
           key={index}
           handleSidebarItems={handleSidebarItems}
-          data={data}
+          keys={keys}
+          values={values}
         />
       );
     }
-    return <SidebarItem key={index} data={data} index={index} />;
+    return <SidebarItem key={index} keys={keys} values={values} />;
   };
 
   return (

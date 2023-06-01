@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function SidebarCollapseContainer({ handleSidebarItems, data }) {
+export default function SidebarCollapseContainer({ handleSidebarItems, keys, values }) {
   const [isCollapsed, setIsCollapsed] = useState(true);
   return (
     <div className="collapse-container">
@@ -27,10 +27,10 @@ export default function SidebarCollapseContainer({ handleSidebarItems, data }) {
             strokeWidth="9"
           />
         </svg>
-        <div>{Object.keys(data)[0]}</div>
+        <div>{keys}</div>
       </div>
       <div style={{ height: isCollapsed ? "0" : "auto" }} className="nested-group">
-        {Object.values(data)[0].map((e, index) => {
+        {values.map((e, index) => {
           return handleSidebarItems(e, index);
         })}
       </div>
