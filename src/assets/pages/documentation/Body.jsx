@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { PageChange } from ".";
+import { motion } from "framer-motion";
 
 export default function Body({ initialPage }) {
   const [page, setPage] = useContext(PageChange);
@@ -7,7 +8,7 @@ export default function Body({ initialPage }) {
 
   useEffect(() => {
     (async () => {
-      setHTML(null)
+      setHTML(null);
       let p = page === "home" ? initialPage?.slice(0, -3) : page;
       const data = await fetch(`/docs/${p}.html`);
       const res = await data.text();
@@ -16,12 +17,23 @@ export default function Body({ initialPage }) {
   }, [page, initialPage]);
 
   const handleLoader = () => {
-    if (!page) {
-      console.log("loading")
-      return
+    if (!HTML) {
+      return (
+        <div className="load-container">
+          <div className="loader">Loading...</div>
+        </div>
+      );
     }
-    return (<div className="body" dangerouslySetInnerHTML={{ __html: HTML }} />)
-  }
+    return (
+      <motion.div
+        initial={{opacity:0, y:20}}
+        animate={{opacity:1, y:0}}
+        transition={{ease:"easeInOut",duration:0.3}}
+        className="body"
+        dangerouslySetInnerHTML={{ __html: HTML }}
+      />
+    );
+  };
 
   return handleLoader();
 }
