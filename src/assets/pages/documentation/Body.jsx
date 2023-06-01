@@ -7,11 +7,21 @@ export default function Body({ initialPage }) {
 
   useEffect(() => {
     (async () => {
+      setHTML(null)
       let p = page === "home" ? initialPage?.slice(0, -3) : page;
       const data = await fetch(`/docs/${p}.html`);
       const res = await data.text();
       setHTML(res);
     })();
   }, [page, initialPage]);
-  return <div className="body" dangerouslySetInnerHTML={{ __html: HTML }} />;
+
+  const handleLoader = () => {
+    if (!page) {
+      console.log("loading")
+      return
+    }
+    return (<div className="body" dangerouslySetInnerHTML={{ __html: HTML }} />)
+  }
+
+  return handleLoader();
 }
