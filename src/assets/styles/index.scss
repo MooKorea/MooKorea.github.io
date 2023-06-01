@@ -1,34 +1,40 @@
-@import 'abstracts/colors';
-@import 'abstracts/fonts';
-@import 'abstracts/variables';
-@import 'scrollbar';
-@import 'documentation';
-@import 'navbar';
+@import "abstracts/colors";
+@import "abstracts/fonts";
+@import "abstracts/variables";
+@import "scrollbar";
+@import "documentation";
+@import "navbar";
 
 html {
-    overflow-y:scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 body {
-    margin: 0;
-    background-color: $white-dark;
-    font-family: $textNormal;
-    color: $textCol-dark;
-    font-size: 1rem;
-    line-height: 1.6em;
+  margin: 0;
+  background-color: $white-dark;
+  font-family: $textNormal;
+  color: $textCol-dark;
+  font-size: 1rem;
+  line-height: 1.6em;
 }
 
 a {
-    color: rgb(79, 79, 219);
-    text-decoration: none;
+  color: rgb(79, 79, 219);
+  text-decoration: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    color: $blue-dark;
-    font-family: $textHeavy;
-    line-height: 1em;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $blue-dark;
+  font-family: $textHeavy;
+  line-height: 1em;
 }
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }

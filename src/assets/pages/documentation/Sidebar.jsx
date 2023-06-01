@@ -1,19 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SidebarItem from "./SidebarItem";
 import SidebarCollapseContainer from "./SidebarCollapseContainer";
 
 export default function Sidebar({ mdData }) {
+
+  //loop through TOC
   const handleSidebarItems = (data, index) => {
-    const value = Object.values(data)[0];
-    const key = Object.keys(data)[0];
-    if (Array.isArray(value)) {
+
+    //create nested container if value is array
+    if (Array.isArray(Object.values(data)[0])) {
       return (
         <SidebarCollapseContainer
+          key={index}
           handleSidebarItems={handleSidebarItems}
-          key={key}
-          value={value}
           data={data}
-          index={index}
         />
       );
     }

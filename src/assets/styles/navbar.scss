@@ -24,9 +24,14 @@ nav {
         }
     }
 
-    li {
+    a {
         display: flex;
         align-items: center;
+        height: $navbar-height;
+        color: $textCol-dark;
+    }
+
+    li {
         padding-inline: 1em;
         height: $navbar-height;
         &:hover {

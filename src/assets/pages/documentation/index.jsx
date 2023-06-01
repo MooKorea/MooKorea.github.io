@@ -1,63 +1,42 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
+import Body from "./Body";
 
 export const PageChange = React.createContext();
 
-export default function Documentation() {
-  const [HTMLList, setHTMLList] = useState();
+export default function Documentation({page, setPage}) {
   const [mdData, setMdData] = useState();
+  const [initialPage, setInitialPage] = useState();
+  let listItems = []
   useEffect(() => {
     (async function fetchData() {
-      const data = await fetch("docs/toc.json");
+      const data = await fetch("/docs/toc.json");
       const res = await data.json();
       setMdData(res);
       for (let i of res) {
-        iterateObj(i);
+        defaultFirstItem(i)
       }
-      setHTMLList(listItems);
+      setInitialPage(Object.values(listItems[0])[0])
     })();
   }, []);
 
-  const listItems = [];
-  let nest = 0;
-  const iterateObj = (res) => {
-    const value = Object.values(res)[0];
-    const key = Object.keys(res)[0];
-
+  const defaultFirstItem = (data) => {
+    const value = Object.values(data)[0];
     if (Array.isArray(value)) {
-      listItems.push(listItemData(key, nest, nest === 0 ? "dropdown" : "grouper"));
-      nest++;
       for (let i of value) {
-        iterateObj(i);
+        defaultFirstItem(i)
       }
-      nest--;
-      return;
+      return
     }
-
-    listItems.push(listItemData(key, nest, "page", value));
-    return;
-  };
-
-  let groupId = 0;
-  const listItemData = (key, nest, type, path) => {
-    if (nest === 0) groupId++;
-    const item = {};
-    item.name = key;
-    item.nest = nest;
-    item.type = type;
-    item.path = path;
-    item.groupId = groupId;
-    return item;
-  };
-
-  const [page, setPage] = useState(1);
+    listItems.push(data)
+  }
 
   return (
     <PageChange.Provider value={[page, setPage]}>
       <main className="documentation">
         <div className="documentation-container">
           <Sidebar mdData={mdData} />
-          {/* <div className="body" dangerouslySetInnerHTML={{ __html: HTML }} /> */}
+          <Body initialPage={initialPage}/>
         </div>
       </main>
     </PageChange.Provider>
