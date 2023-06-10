@@ -2,6 +2,9 @@ nav {
     font-family: $textNormal;
     background-color: white;
     height: $navbar-height;
+    position: fixed;
+    top: 0;
+    width: 100vw;
     filter: drop-shadow(0 0 3px rgb(195, 195, 195));
 
     .container {
