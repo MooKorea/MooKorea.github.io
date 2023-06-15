@@ -11,7 +11,11 @@ export default function Body({ initialPage }) {
   useEffect(() => {
     (async () => {
       setHTML(null);
-      let p = page === "home" ? initialPage?.slice(0, -3) : page;
+      let p = page;
+      if (initialPage === undefined) return
+      if (page === "home") {
+        p = initialPage.slice(0, -3)
+      }
       const data = await fetch(`/docs/${p}.html`);
       if (data.status === 404) {
         setHTML(`${page}.md does not exist in the github repository`);
