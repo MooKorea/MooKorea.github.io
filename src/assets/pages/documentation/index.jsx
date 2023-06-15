@@ -13,7 +13,7 @@ export default function Documentation() {
   let listItems = [];
   useEffect(() => {
     (async function fetchData() {
-      const data = await fetch("/docs/toc.json");
+      const data = await fetch("documentation/toc.json");
       const res = await data.json();
       setMdData(res);
       for (let i of res) {

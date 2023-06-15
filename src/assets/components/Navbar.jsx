@@ -8,7 +8,7 @@ export default function Navbar() {
         <ul>
           <li className="logo">
             <Link to="/">
-              <img src="/images/Genvisis_Logo_Full.png" />
+              <img src="images/Genvisis_Logo_Full.png" />
             </Link>
           </li>
           <li>
