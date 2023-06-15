@@ -36,7 +36,7 @@ export default function Body({ initialPage }) {
           </a>
         );
       }
-    },
+    }
   };
 
   const handleLoader = () => {

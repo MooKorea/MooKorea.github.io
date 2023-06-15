@@ -10,7 +10,8 @@ function convertMarkdownToHTML(markdown) {
 
 function traverseDirectory(directory) {
   const files = fs.readdirSync(directory);
-
+  const filePaths = [];
+  
   for (const file of files) {
     const filePath = path.join(directory, file);
     const fileStat = fs.statSync(filePath);
@@ -23,10 +24,15 @@ function traverseDirectory(directory) {
       const htmlFileName = file.replace(".md", ".html");
       const destinationPath = path.join(filePath, "..", htmlFileName);
       fs.writeFileSync(destinationPath, html);
+      filePaths.push(htmlFileName)
       fs.unlinkSync(filePath);
       console.log(`Converted ${filePath} to ${htmlFileName}`);
     }
   }
+
+  //create JSON with all file names
+  const filePathsJSON = path.join(directory, "fileNames.json")
+  fs.writeFileSync(filePathsJSON, JSON.stringify(filePaths))
 }
 
 const repositories = [
@@ -36,9 +42,9 @@ const repositories = [
     destinationDirectory: path.join(__dirname, "dist/docs"),
   },
   {
-    name: "features",
-    repositoryURL: "https://github.com/PankratzLab/Genvisis-Features-Webpage",
-    destinationDirectory: path.join(__dirname, "dist/features"),
+    name: "other-content",
+    repositoryURL: "https://github.com/PankratzLab/Genvisis-Website",
+    destinationDirectory: path.join(__dirname, "dist/other-content"),
   },
 ];
 
