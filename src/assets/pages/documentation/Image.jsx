@@ -6,7 +6,7 @@ export default function Image({ attribs }) {
   return (
     <>
       <img
-        src={`/documentation/${attribs.src}`}
+        src={`/docs/${attribs.src}`}
         className="docs-image"
         alt={attribs.alt}
         onClick={() => setIsImgPopup(true)}

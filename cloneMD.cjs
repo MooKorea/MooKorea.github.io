@@ -39,7 +39,7 @@ const repositories = [
   {
     name: "documentation",
     repositoryURL: "https://github.com/PankratzLab/Genvisis-Docs",
-    destinationDirectory: path.join(__dirname, "dist/documentation"),
+    destinationDirectory: path.join(__dirname, "dist/docs"),
   },
   {
     name: "other-content",
