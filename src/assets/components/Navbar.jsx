@@ -7,21 +7,21 @@ export default function Navbar() {
       <div className="container">
         <ul>
           <li className="logo">
-            <Link to="/">
-              <img src="images/Genvisis_Logo_Full.png" />
+            <Link to="./">
+              <img src="/images/Genvisis_Logo_Full.png" />
             </Link>
           </li>
           <li>
-            <Link to="/download">Download</Link>
+            <Link to="./download">Download</Link>
           </li>
           <li>
-            <Link to="/features">Features</Link>
+            <Link to="./features">Features</Link>
           </li>
           <li>
-            <Link to="/tutorials">Tutorials</Link>
+            <Link to="./tutorials">Tutorials</Link>
           </li>
           <li>
-            <Link to="/documentation/home">Documentation</Link>
+            <Link to="./documentation/home">Documentation</Link>
           </li>
         </ul>
       </div>
