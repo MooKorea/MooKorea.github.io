@@ -12,7 +12,7 @@ export default function Body({ initialPage }) {
     (async () => {
       setHTML(null);
       let p = page === "home" ? initialPage?.slice(0, -3) : page;
-      const data = await fetch(`/docs/${p}.html`);
+      const data = await fetch(`/documentation/${p}.html`);
       if (data.status === 404) {
         setHTML(`${page}.md does not exist in the github repository`);
         return;
