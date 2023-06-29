@@ -41,16 +41,21 @@ const repositories = [
     repositoryURL: "https://github.com/PankratzLab/Genvisis-Docs",
     destinationDirectory: path.join(__dirname, "dist/docs"),
   },
-  {
-    name: "other-content",
-    repositoryURL: "https://github.com/PankratzLab/Genvisis-Website",
-    destinationDirectory: path.join(__dirname, "dist/other-content"),
-  },
 ];
+
+const localDirectories = [
+  {
+    name: "Downloads",
+    directory: path.join(__dirname, "Downloads")
+  },
+  {
+    name: "Features",
+    directory: path.join(__dirname, "Features")
+  },
+]
 
 async function cloneRepositories() {
   for (r of repositories) {
-    // Remove the destination directory if it exists
     if (fs.existsSync(r.destinationDirectory)) {
       fs.emptyDirSync(r.destinationDirectory);
     }
@@ -62,6 +67,13 @@ async function cloneRepositories() {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  for (l of localDirectories) {
+    const destinationDirectory = path.join(__dirname, `dist/${l.name}`)
+    fs.copySync(l.directory, destinationDirectory)
+    traverseDirectory(destinationDirectory)
+    console.log(`${l.name} conversion completed!`)
   }
 }
 
