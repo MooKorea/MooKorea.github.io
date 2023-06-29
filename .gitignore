@@ -25,7 +25,8 @@ dist-ssr
 
 docs
 docs2
-
+public/downloads
+public/features
 other-content
 documentation
 .env
